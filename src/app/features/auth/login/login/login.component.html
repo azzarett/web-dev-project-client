@@ -1,0 +1,28 @@
+<div class="login-container">
+    <nz-card class="login-card">
+      <form [formGroup]="loginForm" (ngSubmit)="login()">
+        <nz-form-item>
+          <nz-form-label>Имя пользователя</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="username" placeholder="Введите имя пользователя" />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-label>Пароль</nz-form-label>
+          <nz-form-control>
+            <input nz-input formControlName="password" type="password" placeholder="Введите пароль" />
+          </nz-form-control>
+        </nz-form-item>
+  
+        <nz-form-item>
+          <nz-form-control [nzSpan]="14" [nzOffset]="6">
+            <button nz-button nzType="primary" [disabled]="loading">
+              {{ loading ? 'Загрузка...' : 'Войти' }}
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </nz-card>
+  </div>
+  

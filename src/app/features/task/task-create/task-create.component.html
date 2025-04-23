@@ -1,0 +1,22 @@
+<div class="create-task-container">
+    <form [formGroup]="form" (ngSubmit)="submit()" nz-form>
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24">Название</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <input nz-input formControlName="title" placeholder="Введите название задачи" />
+        </nz-form-control>
+      </nz-form-item>
+  
+      <nz-form-item>
+        <nz-form-label [nzSpan]="24">Описание</nz-form-label>
+        <nz-form-control [nzSpan]="24">
+          <textarea nz-input formControlName="details" rows="4" placeholder="Дополнительные детали"></textarea>
+        </nz-form-control>
+      </nz-form-item>
+  
+      <button nz-button nzType="primary" [disabled]="loading" [nzLoading]="loading" htmlType="submit">
+        Создать задачу
+      </button>
+    </form>
+  </div>
+  

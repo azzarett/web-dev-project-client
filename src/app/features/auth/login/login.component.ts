@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
@@ -31,11 +31,11 @@ export class LoginComponent {
   loading = false;
 
   constructor(
-    private fb: FormBuilder,  
+    private fb: FormBuilder,
     private http: HttpClient,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {
-    // Инициализация формы в конструкторе
     this.loginForm = this.fb.group({
       username: ['', Validators.required],
       password: ['', Validators.required]
@@ -59,6 +59,7 @@ export class LoginComponent {
           localStorage.setItem('access', res.access);
           localStorage.setItem('refresh', res.refresh);
           this.message.success('Вы вошли в систему!');
+          this.router.navigate(['/tasks']);
           this.loading = false;
         },
         error: (err) => {

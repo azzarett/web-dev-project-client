@@ -1,0 +1,12 @@
+<div class="task-list-container">
+  <button nz-button nzType="primary" (click)="addTask()">Добавить задачу</button>
+
+  <nz-spin [nzSpinning]="loading">
+    <ul *ngIf="!loading">
+      <li *ngFor="let task of tasks">
+        <strong>{{ task.title }}</strong>
+        <p>{{ task.details }}</p>
+      </li>
+    </ul>
+  </nz-spin>
+</div>

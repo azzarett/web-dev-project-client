@@ -8,6 +8,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +33,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private http: HttpClient,
-    private message: NzMessageService
+    private message: NzMessageService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -76,6 +78,7 @@ export class RegisterComponent implements OnInit {
           localStorage.setItem('access', res.access);
           localStorage.setItem('refresh', res.refresh);
           this.message.success('Вы вошли в систему!');
+          this.router.navigate(['/tasks']);
           this.loading = false;
         },
         error: (err) => {

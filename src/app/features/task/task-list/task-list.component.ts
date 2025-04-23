@@ -33,7 +33,8 @@ export class TaskListComponent implements OnInit {
     this.loading = true;
 
     const accessToken = localStorage.getItem('access');
-    
+    const refreshToken = localStorage.getItem('refresh');
+
     if (!accessToken) {
       this.message.error('Пожалуйста, войдите в систему');
       this.router.navigate(['/login']);
@@ -48,9 +49,28 @@ export class TaskListComponent implements OnInit {
         this.loading = false;
       },
       error: (err) => {
-        console.error('Ошибка загрузки задач', err);
-        this.message.error('Не удалось загрузить задачи');
-        this.loading = false;
+        if (err.status === 401 && refreshToken) {
+          this.refreshToken(refreshToken);
+        } else {
+          console.error('Ошибка загрузки задач', err);
+          this.message.error('Не удалось загрузить задачи');
+          this.loading = false;
+        }
+      }
+    });
+  }
+
+  refreshToken(refreshToken: string): void {
+    this.http.post<any>('http://127.0.0.1:8000/api/token/refresh/', { refresh: refreshToken }).subscribe({
+      next: (res) => {
+        const newAccessToken = res.access;
+        localStorage.setItem('access', newAccessToken);
+        this.loadTasks(); 
+      },
+      error: (err) => {
+        console.error('Ошибка обновления токена', err);
+        this.message.error('Ошибка обновления токена');
+        this.router.navigate(['/login']);
       }
     });
   }

@@ -4,6 +4,11 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzButtonModule } from 'ng-zorro-antd/button';
 
 @Component({
   selector: 'app-task-list',
@@ -13,6 +18,11 @@ import { NzMessageService } from 'ng-zorro-antd/message';
   imports: [
     CommonModule,
     NzSpinModule,
+    NzAvatarModule,
+    NzDropDownModule,
+    NzMenuModule,
+    NzIconModule,
+    NzButtonModule,
   ],
 })
 export class TaskListComponent implements OnInit {
@@ -77,5 +87,11 @@ export class TaskListComponent implements OnInit {
 
   addTask(): void {
     this.router.navigate(['/tasks/new']);
+  }
+
+  logout(): void {
+    localStorage.removeItem('access');
+    localStorage.removeItem('refresh');
+    this.router.navigate(['/login']);
   }
 }

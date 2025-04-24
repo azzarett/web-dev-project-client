@@ -38,7 +38,18 @@ export class TaskService {
   }
 
   updateTask(id: number, task: Partial<Task>): Observable<Task> {
-    return this.http.put<Task>(`${this.apiUrl}${id}/`, task);
+    const accessToken = localStorage.getItem('access');
+
+    if (!accessToken) {
+      throw new Error('Access token not found');
+    }
+
+    const headers = new HttpHeaders().set(
+      'Authorization',
+      `Bearer ${accessToken}`
+    );
+
+    return this.http.put<Task>(`${this.apiUrl}${id}/`, task, { headers });
   }
 
   deleteTask(id: number): Observable<void> {

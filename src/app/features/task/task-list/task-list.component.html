@@ -11,7 +11,14 @@
   <nz-spin [nzSpinning]="loading">
     <ul *ngIf="!loading">
       <li *ngFor="let task of filteredTasks">
-        <strong>{{ task.title }}</strong>
+        <label>
+          <input
+            type="checkbox"
+            [checked]="task.is_done"
+            (change)="toggleDone(task)"
+          />
+          <strong [class.done]="task.is_done">{{ task.title }}</strong>
+        </label>
         <p>{{ task.details }}</p>
         <p><em>Теги: {{ getTagNames(task.tags) }}</em></p>
       </li>

@@ -35,7 +35,7 @@ export class TaskListComponent implements OnInit {
   loading = false;
 
   viewMode: 'all' | 'filtered' = 'all';
-  selectedTag = 0; // —1 не нужен, 0=Без тега, >0=по тегу
+  selectedTag = 0;
 
   constructor(
     private taskService: TaskService,
@@ -67,12 +67,9 @@ export class TaskListComponent implements OnInit {
     if (this.viewMode === 'all') {
       this.filteredTasks = [...this.tasks];
     } else {
-      // filtered
       if (this.selectedTag === 0) {
-        // без тегов
         this.filteredTasks = this.tasks.filter(t => !t.tags || t.tags.length === 0);
       } else {
-        // по конкретному тегу
         this.filteredTasks = this.tasks.filter(t =>
           t.tags?.some(tag => tag.id === this.selectedTag)
         );
@@ -96,5 +93,18 @@ export class TaskListComponent implements OnInit {
 
   getTagNames(tags: { id: number; name: string }[] = []): string {
     return tags.length ? tags.map(t => t.name).join(', ') : 'Без тега';
+  }
+
+  toggleDone(task: Task): void {
+    const updatedTask = { is_done: !task.is_done };
+    this.taskService.updateTask(task.id, updatedTask).subscribe({
+      next: updated => {
+        task.is_done = updated.is_done;
+        this.message.success('Статус задачи обновлён');
+      },
+      error: () => {
+        this.message.error('Ошибка при обновлении задачи');
+      }
+    });
   }
 }

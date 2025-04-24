@@ -1,0 +1,41 @@
+<header class="header">
+  <div class="logo">📝 Мои задачи</div>
+
+  <div class="menu-options">
+    <nz-select
+      [(ngModel)]="selectedView"
+      nzPlaceHolder="Выберите представление"
+      (ngModelChange)="onViewChange($event)"
+    >
+      <nz-option
+        *ngFor="let o of viewOptions"
+        [nzValue]="o.value"
+        [nzLabel]="o.label"
+      ></nz-option>
+    </nz-select>
+
+    <nz-select
+      *ngIf="selectedView === 'filtered'"
+      [(ngModel)]="selectedTag"
+      nzPlaceHolder="Выберите тег"
+      (ngModelChange)="onTagChange($event)"
+    >
+      <nz-option
+        *ngFor="let t of tags"
+        [nzValue]="t.id"
+        [nzLabel]="t.name"
+      ></nz-option>
+    </nz-select>
+  </div>
+
+  <div class="user-section" (click)="toggleMenu()">
+    <nz-avatar nzIcon="user" nzSize="small"></nz-avatar>
+    <span>{{ username }}</span>
+  </div>
+
+  <div class="menu" *ngIf="showMenu">
+    <button nz-button nzType="text" (click)="logout()">
+      <span nz-icon nzType="logout"></span> Выйти
+    </button>
+  </div>
+</header>

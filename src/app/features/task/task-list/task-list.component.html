@@ -1,0 +1,20 @@
+<app-header
+  (viewChange)="onViewChange($event)"
+  (tagChange)="onTagSelected($event)"
+></app-header>
+
+<div class="task-list-container">
+  <button nz-button nzType="primary" (click)="addTask()">
+    Добавить задачу
+  </button>
+
+  <nz-spin [nzSpinning]="loading">
+    <ul *ngIf="!loading">
+      <li *ngFor="let task of filteredTasks">
+        <strong>{{ task.title }}</strong>
+        <p>{{ task.details }}</p>
+        <p><em>Теги: {{ getTagNames(task.tags) }}</em></p>
+      </li>
+    </ul>
+  </nz-spin>
+</div>

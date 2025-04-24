@@ -9,6 +9,7 @@ import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzButtonModule } from 'ng-zorro-antd/button';
+import { HeaderComponent } from '../../../shared/components/header/header.component';
 
 @Component({
   selector: 'app-task-list',
@@ -23,6 +24,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
     NzMenuModule,
     NzIconModule,
     NzButtonModule,
+    HeaderComponent,
   ],
 })
 export class TaskListComponent implements OnInit {
@@ -87,11 +89,5 @@ export class TaskListComponent implements OnInit {
 
   addTask(): void {
     this.router.navigate(['/tasks/new']);
-  }
-
-  logout(): void {
-    localStorage.removeItem('access');
-    localStorage.removeItem('refresh');
-    this.router.navigate(['/login']);
   }
 }
